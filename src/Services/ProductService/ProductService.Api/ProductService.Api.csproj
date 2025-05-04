@@ -17,4 +17,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ProductService.Application\ProductService.Application.csproj" />
+    </ItemGroup>
+
 </Project>

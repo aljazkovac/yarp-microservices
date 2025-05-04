@@ -1,6 +1,21 @@
-@ProductService.Api_HostAddress = http://localhost:5083
+# Adjust port if needed
+@ProductServiceApi_HostAddress = http://localhost:5083 
 
-GET {{ProductService.Api_HostAddress}}/weatherforecast/
+### Get all products
+GET {{ProductServiceApi_HostAddress}}/api/products
 Accept: application/json
 
-###
+### Get product by ID (replace with a real ID later)
+GET {{ProductServiceApi_HostAddress}}/api/products/1
+Accept: application/json
+
+### Create a new product
+POST {{ProductServiceApi_HostAddress}}/api/products
+Content-Type: application/json
+Accept: application/json
+{
+  "name": "New Gadget",
+  "description": "A very useful new gadget.",
+  "price": 19.99
+}
+
