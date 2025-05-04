@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ProductService.Application;
+﻿namespace ProductService.Application;
 
 /// <summary>
 /// Data Transfer Object (DTO) representing a Product for external consumers (e.g., API clients).
