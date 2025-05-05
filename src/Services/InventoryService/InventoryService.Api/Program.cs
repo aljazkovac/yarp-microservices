@@ -1,10 +1,24 @@
+using InventoryService.Application; // Add this using
+using InventoryService.Domain;      // Add this using
+using InventoryService.Infrastructure; // Add this using
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// *** Add our DI registrations START ***
+// Register the repository as Singleton (uses static collection)
+builder.Services.AddSingleton<IInventoryRepository, InMemoryInventoryRepository>();
+
+// Register the application service as Scoped
+builder.Services.AddScoped<InventoryAppService>();
+// *** Add our DI registrations END ***
+
+// Configure OpenAPI/Swagger using Swashbuckle
+builder.Services.AddEndpointsApiExplorer(); // Needed for discovery
+builder.Services.AddSwaggerGen();          // Configures Swagger generation
 
 var app = builder.Build();
 
@@ -12,12 +26,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();         // Serves the generated OpenAPI spec file(s)
+    app.UseSwaggerUI();         // Serves the interactive Swagger UI
 }
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthorization(); // We can keep this, though we aren't using auth yet
 
-app.MapControllers();
+app.MapControllers(); // Maps controller routes
 
 app.Run();

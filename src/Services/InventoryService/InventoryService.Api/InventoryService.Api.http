@@ -1,6 +1,47 @@
-@InventoryService.Api_HostAddress = http://localhost:5098
+# Define the base address variable for the Inventory Service API
+# Adjust the port (5098) if it differs in your launchSettings.json for InventoryService.Api
+@InventoryServiceApi_HostAddress = http://localhost:5098
 
-GET {{InventoryService.Api_HostAddress}}/weatherforecast/
+# Use a placeholder Product ID - replace this with actual IDs when testing
+@TestProductId = 11111111-1111-1111-1111-111111111111
+
+### Get inventory status for all products
+# GET /api/inventory
+GET {{InventoryServiceApi_HostAddress}}/api/inventory
 Accept: application/json
 
-###
+### Get inventory status for a specific product
+# GET /api/inventory/{productId}
+GET {{InventoryServiceApi_HostAddress}}/api/inventory/{{TestProductId}}
+Accept: application/json
+
+### Increase stock for a specific product
+# POST /api/inventory/{productId}/increase
+POST {{InventoryServiceApi_HostAddress}}/api/inventory/{{TestProductId}}/increase
+Content-Type: application/json
+Accept: application/json
+
+{
+  "amount": 10
+}
+
+### Decrease stock for a specific product
+# POST /api/inventory/{productId}/decrease
+POST {{InventoryServiceApi_HostAddress}}/api/inventory/{{TestProductId}}/decrease
+Content-Type: application/json
+Accept: application/json
+
+{
+  "amount": 5
+}
+
+### Set stock quantity directly for a specific product
+# PUT /api/inventory/{productId}/stock
+PUT {{InventoryServiceApi_HostAddress}}/api/inventory/{{TestProductId}}/stock
+Content-Type: application/json
+Accept: application/json
+
+{
+  "quantity": 50
+}
+
