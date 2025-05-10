@@ -7,10 +7,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/Services/OrderService/OrderService.Api/OrderService.Api/OrderService.Api.csproj", "src/Services/OrderService/OrderService.Api/OrderService.Api/"]
-RUN dotnet restore "src/Services/OrderService/OrderService.Api/OrderService.Api/OrderService.Api.csproj"
+COPY ["src/Services/OrderService/OrderService.Api/OrderService.Api.csproj", "src/Services/OrderService/OrderService.Api/"]
+RUN dotnet restore "src/Services/OrderService/OrderService.Api/OrderService.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Services/OrderService/OrderService.Api/OrderService.Api"
+WORKDIR "/src/src/Services/OrderService/OrderService.Api/"
 RUN dotnet build "./OrderService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

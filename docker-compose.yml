@@ -1,0 +1,28 @@
+services:
+  product-service:
+    build:
+      context: . # The build context is the current directory (where docker-compose.yml is)
+      dockerfile: src/Services/ProductService/ProductService.Api/Dockerfile
+    ports:
+      - "5001:8080" # Map host port 5001 to container port 8080 (default HTTP for .NET 8+ aspnet images)
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Add other environment variables if needed, e.g., connection strings if using a DB
+
+  inventory-service:
+    build:
+      context: .
+      dockerfile: src/Services/InventoryService/InventoryService.Api/Dockerfile
+    ports:
+      - "5002:8080" # Map host port 5002 to container port 8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  order-service:
+    build:
+      context: .
+      dockerfile: src/Services/OrderService/OrderService.Api/Dockerfile
+    ports:
+      - "5003:8080" # Map host port 5003 to container port 8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
