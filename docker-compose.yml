@@ -28,6 +28,19 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+    
+  postgres-db:
+    image: postgres:15-alpine # Using PostgreSQL version 15 on Alpine Linux for a smaller image
+    container_name: yarp_postgres_db # Optional: give the container a specific name
+    environment:
+      POSTGRES_USER: yarpuser        # Define the default superuser for the database
+      POSTGRES_PASSWORD: yarpPassword  # Define the password for the superuser
+      POSTGRES_DB: yarp_routing_db   # Optional: Creates this database automatically on first run
+    ports:
+      - "5432:5432" # Map host port 5432 to container port 5432 (default PostgreSQL port)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist database data
+    restart: unless-stopped # Optional: restarts the DB container if it stops, unless manually stopped
 
   gateway-api: 
     build:
@@ -42,3 +55,8 @@ services:
       - product-service
       - inventory-service
       - order-service
+      - postgres-db
+      
+volumes:
+  postgres_data: # This named volume will store the PostgreSQL data
+
