@@ -34,6 +34,17 @@ public class ProductsController : ControllerBase
     public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
     {
         var products = await _productAppService.GetAllProductsAsync();
+        
+        // Check for our variant environment variable
+        var serviceVariant = Environment.GetEnvironmentVariable("SERVICE_VARIANT");
+
+        if (serviceVariant == "variantB")
+        {
+            // Example: Add a suffix to product names for variant B
+            var variantProducts = products.Select(p => p with { Name = p.Name + " (Variant B)" });
+            return Ok(variantProducts);
+        }
+        
         return Ok(products); // Returns HTTP 200 OK with the list of DTOs
     }
 

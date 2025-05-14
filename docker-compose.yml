@@ -1,5 +1,5 @@
 services:
-  product-service:
+  product-service-a:
     build:
       context: .
       dockerfile: src/Services/ProductService/ProductService.Api/Dockerfile
@@ -8,6 +8,17 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080 # Explicitly set container HTTP port
+      
+  product-service-b:
+    build:
+      context: .
+      dockerfile: src/Services/ProductService/ProductService.Api/Dockerfile
+    ports:
+      - "5011:8080" # Host:Container. 8080 is the default HTTP port for .NET 8+ aspnet images
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080 # Explicitly set container HTTP port
+      - SERVICE_VARIANT=variantB
 
   inventory-service:
     build:
@@ -52,7 +63,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080 # Gateway container listens on 8080
     depends_on: # Good practice: ensure backend services start first
-      - product-service
+      - product-service-a
+      - product-service-b
       - inventory-service
       - order-service
       - postgres-db
