@@ -1,15 +1,6 @@
 {
   "ReverseProxy": {
     "Routes": {
-      "products-route": { 
-        "ClusterId": "products-cluster",
-        "Match": {
-          "Path": "/products-api/{**catch-all}" 
-        },
-        "Transforms": [ 
-          { "PathRemovePrefix": "/products-api" }
-        ]
-      },
       "inventory-route": {
         "ClusterId": "inventory-cluster",
         "Match": {
