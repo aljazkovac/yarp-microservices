@@ -1,0 +1,24 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+      "products-route": {
+        "ClusterId": "cluster2",
+        "Match": {
+          "Path": "/products/{**catch-all}"
+        },
+        "Transforms": [
+          { "PathSet": "/" }
+        ]
+      }
+    },
+    "Clusters": {
+      "cluster2": {
+        "Destinations": {
+          "destination3": {
+            "Address": "https://rtvslo.si/"
+          }
+        }
+      }
+    }
+  }
+}

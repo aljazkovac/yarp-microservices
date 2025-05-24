@@ -1,0 +1,15 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+    },
+    "Clusters": {
+      "products-cluster": {
+        "Destinations": {
+          "destination1": {
+            "Address": "http://product-service-a:8080"
+          }
+        }
+      }
+    }
+  }
+}
