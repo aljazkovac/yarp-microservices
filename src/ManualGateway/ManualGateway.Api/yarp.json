@@ -4,7 +4,7 @@
       "products-route": {
         "ClusterId": "cluster2",
         "Match": {
-          "Path": "/products/{**catch-all}"
+          "Path": "/rtv/{**catch-all}"
         },
         "Transforms": [
           { "PathSet": "/" }

@@ -18,28 +18,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080 # Explicitly set container HTTP port
-      - SERVICE_VARIANT=variantB
 
-  inventory-service:
-    build:
-      context: .
-      dockerfile: src/Services/InventoryService/InventoryService.Api/Dockerfile
-    ports:
-      - "5002:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-
-  order-service:
-    build:
-      context: .
-      dockerfile: src/Services/OrderService/OrderService.Api/Dockerfile
-    ports:
-      - "5003:8080"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-    
   postgres-db:
     image: postgres:15-alpine # Using PostgreSQL version 15 on Alpine Linux for a smaller image
     container_name: yarp_postgres_db # Optional: give the container a specific name
@@ -56,17 +35,15 @@ services:
   gateway-api: 
     build:
       context: .
-      dockerfile: src/Gateway/Gateway.Api/Dockerfile
+      dockerfile: src/ManualGateway/ManualGateway.Api/Dockerfile
     ports:
-      - "5500:8080" # YARP gateway will be accessible on host port 5000
+      - "5012:8080" # YARP gateway will be accessible on host port 5012
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080 # Gateway container listens on 8080
     depends_on: # Good practice: ensure backend services start first
       - product-service-a
       - product-service-b
-      - inventory-service
-      - order-service
       - postgres-db
       
 volumes:
