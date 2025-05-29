@@ -60,8 +60,22 @@ services:
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'
     restart: unless-stopped
+  
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: unless-stopped
+    depends_on:
+      - prometheus
       
 volumes:
   postgres_data: # This named volume will store the PostgreSQL data
   prometheus_data: # This named volume will store the Prometheus metrics data
+  grafana_data: # This names volume will store the Grafana data
 
