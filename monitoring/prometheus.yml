@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'gateway-api'
+    static_configs:
+      - targets: ['gateway-api:8080']
+  
+  - job_name: 'product-service-a'
+    static_configs:
+      - targets: ['product-service-a:8080']
+      
+  - job_name: 'product-service-b'
+    static_configs:
+      - targets: ['product-service-b:8080']

@@ -1,4 +1,5 @@
 using ManualGateway.Api.Services;
+using Prometheus;
 using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Model;
 
@@ -41,6 +42,10 @@ app.MapReverseProxy(proxyPipeline =>
     proxyPipeline.UseSessionAffinity();
     proxyPipeline.UseLoadBalancing();
 });
+
+// Use and send metrics to Prometheus
+app.UseHttpMetrics();
+app.MapMetrics();
 
 app.Run();
 

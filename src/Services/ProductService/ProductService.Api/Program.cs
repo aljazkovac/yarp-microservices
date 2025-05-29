@@ -1,6 +1,7 @@
 using ProductService.Application; // Add this using for ProductAppService
 using ProductService.Domain;      // Add this using for IProductRepository
 using ProductService.Infrastructure; // Add this using for InMemoryProductRepository
+using Prometheus; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,5 +37,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Use and send metrics to Prometheus
+app.UseHttpMetrics();
+app.MapMetrics();
 
 app.Run();

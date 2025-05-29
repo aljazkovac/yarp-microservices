@@ -45,7 +45,23 @@ services:
       - product-service-a
       - product-service-b
       - postgres-db
+    
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml # Bind mounts the config file into the container
+      - prometheus_data:/prometheus # Named volume to persist metrics data
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    restart: unless-stopped
       
 volumes:
   postgres_data: # This named volume will store the PostgreSQL data
+  prometheus_data: # This named volume will store the Prometheus metrics data
 
